@@ -7,7 +7,7 @@ import '../../../models/Product.dart';
 import '../../../size_config.dart';
 import '../../../user_list/views/home_scree.dart';
 import '../../authantication/sign_up/sign_up_screen.dart';
-import '../../cart/cart_screen.dart';
+import '../../cart/view/cart_screen.dart';
 import '../../order/view/order_screen.dart';
 
 class Categories extends StatelessWidget {

@@ -12,7 +12,7 @@ import 'package:ecom_admin_app/screens/order/view/order_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 
-import 'screens/cart/cart_screen.dart';
+import 'screens/cart/view/cart_screen.dart';
 import 'screens/complete_profile/complete_profile_screen.dart';
 import 'screens/details/details_screen.dart';
 import 'screens/home/home_screen.dart';

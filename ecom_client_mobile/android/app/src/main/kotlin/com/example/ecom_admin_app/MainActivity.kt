@@ -1,4 +1,4 @@
-package com.pramodaya.base_project.ecom_admin_app
+package com.pramodaya.base_project.ecom_client_app
 
 import io.flutter.embedding.android.FlutterActivity
 

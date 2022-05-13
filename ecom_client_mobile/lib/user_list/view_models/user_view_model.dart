@@ -36,7 +36,7 @@ class UsersViewModel extends ChangeNotifier {
   }
 
   setSelecteduser(UserModel selectedUser) {
-    _selectedUser = selectedUser;
+    _selectedUser = selectedUser;setLoading(false);
   }
 
   setAddingUser(UserModel addUser) {

@@ -28,6 +28,14 @@ class ProductDescription extends StatelessWidget {
             style: Theme.of(context).textTheme.headline6,
           ),
         ),
+         Padding(
+          padding:
+              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+          child: Text(
+            product.price.toString()+"\$",
+            style: Theme.of(context).textTheme.headline6,
+          ),
+        ),
         Align(
           alignment: Alignment.centerRight,
           child: Container(
@@ -56,7 +64,7 @@ class ProductDescription extends StatelessWidget {
           ),
           child: Text(
             product.description,
-            maxLines: 3,
+            maxLines: 5,
           ),
         ),
 
@@ -71,17 +79,17 @@ class ProductDescription extends StatelessWidget {
             onTap: () {},
             child: Row(
               children: [
-                Text(
-                  "See More Detail",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w600, color: kPrimaryColor),
-                ),
-                SizedBox(width: 5),
-                Icon(
-                  Icons.arrow_forward_ios,
-                  size: 12,
-                  color: kPrimaryColor,
-                ),
+                // Text(
+                //   "See More Detail",
+                //   style: TextStyle(
+                //       fontWeight: FontWeight.w600, color: kPrimaryColor),
+                // ),
+                // SizedBox(width: 5),
+                // Icon(
+                //   Icons.arrow_forward_ios,
+                //   size: 12,
+                //   color: kPrimaryColor,
+                // ),
               ],
             ),
           ),

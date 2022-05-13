@@ -44,7 +44,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.pramodaya.base_project.ecom_admin_app"
+        applicationId "com.pramodaya.base_project.ecom_client_app"
         minSdkVersion 21
         multiDexEnabled true
         targetSdkVersion 29

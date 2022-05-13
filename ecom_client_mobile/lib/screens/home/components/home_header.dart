@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../size_config.dart';
-import '../../cart/cart_screen.dart';
+import '../../cart/view/cart_screen.dart';
+import '../../cart/view_model/cart_view_model.dart';
 import 'icon_btn_with_counter.dart';
 import 'search_field.dart';
 
@@ -12,6 +14,7 @@ class HomeHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    CartViewModel cartViewModel = context.watch<CartViewModel>();
     return Padding(
       padding:
           EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
@@ -21,6 +24,7 @@ class HomeHeader extends StatelessWidget {
           SearchField(),
           IconBtnWithCounter(
             svgSrc: "assets/icons/Cart Icon.svg",
+            numOfitem: getCartCount(cartViewModel),
             press: () => Navigator.pushNamed(context, CartScreen.routeName),
           ),
           IconBtnWithCounter(
@@ -32,4 +36,12 @@ class HomeHeader extends StatelessWidget {
       ),
     );
   }
+}
+
+int getCartCount(CartViewModel cvm){
+  int _itemCount = 0;
+  cvm.getProductCart.forEach((element) {
+    _itemCount += element.numOfItem;
+  });
+  return _itemCount;
 }

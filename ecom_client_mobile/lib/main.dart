@@ -10,6 +10,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'screens/cart/view_model/cart_view_model.dart';
 import 'screens/splash/splash_screen.dart';
 
 void main() async {
@@ -36,7 +37,8 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(create: (_) => UsersViewModel(),),
         ChangeNotifierProvider(create: (_) => AddProductViewModel(),),
-         ChangeNotifierProvider(create: (_) => OrderViewModel(),),
+        ChangeNotifierProvider(create: (_) => OrderViewModel(),),
+        ChangeNotifierProvider(create: (_)=> CartViewModel(),),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

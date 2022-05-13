@@ -66,8 +66,8 @@ class Body extends StatelessWidget {
       stream: FirebaseFirestore.instance.collection('product').snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
         if (!snapshot.hasData) {
-          return Text(
-               "hellow"
+          return const Text(
+               "No items"
              );
         } else {
           var size = snapshot.data!.docs.length;
@@ -81,7 +81,7 @@ class Body extends StatelessWidget {
              });
 
             Product p = Product(
-                id: "0",
+                id: item['id'],
                 stockQty: item['stockQty'],
                 images: imges,
                 colors: [],
