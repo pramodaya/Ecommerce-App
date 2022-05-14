@@ -8,6 +8,7 @@ import 'package:ecom_admin_app/user_list/view_models/user_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:provider/provider.dart';
 
 import 'screens/cart/view_model/cart_view_model.dart';
@@ -16,6 +17,7 @@ import 'screens/splash/splash_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  Stripe.publishableKey = 'pk_test_51KzDT9IquXM5SQMDmnFq0TQMMOh2uh3VRd03Sx3ebzd8aAznlErBhkLWhyaMEGxA0suUceg392meHtnWzJSYQkdc00ytXTdHpL';
   runApp(const MyApp());
 }
 

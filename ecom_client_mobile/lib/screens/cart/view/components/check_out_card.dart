@@ -1,16 +1,27 @@
 import 'package:ecom_admin_app/screens/cart/view_model/cart_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../components/default_button.dart';
 import '../../../../constants.dart';
 import '../../../../size_config.dart';
+import 'dart:convert';
+import 'dart:convert';
+import 'package:http/http.dart';
 
-class CheckoutCard extends StatelessWidget {
+class CheckoutCard extends StatefulWidget {
   const CheckoutCard({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<CheckoutCard> createState() => _CheckoutCardState();
+}
+
+class _CheckoutCardState extends State<CheckoutCard> {
+  Map<String, dynamic>? paymentIntentData;
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +82,7 @@ class CheckoutCard extends StatelessWidget {
                     text: "Total:\n",
                     children: [
                       TextSpan(
-                        text: "\$"+ cartViewModel.getTotalPrice.toString(),
+                        text: "\$" + cartViewModel.getTotalPrice.toString(),
                         style: TextStyle(fontSize: 16, color: Colors.black),
                       ),
                     ],
@@ -81,7 +92,9 @@ class CheckoutCard extends StatelessWidget {
                   width: getProportionateScreenWidth(190),
                   child: DefaultButton(
                     text: "Check Out",
-                    press: () {},
+                    press: () {
+                      makePayment(cartViewModel, (cartViewModel.getTotalPrice* 100).toString());
+                    },
                   ),
                 ),
               ],
@@ -90,5 +103,59 @@ class CheckoutCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> makePayment(CartViewModel cartViweModel, String price) async {
+    final uri = Uri.parse(
+        'https://us-central1-fiver-ecom-app.cloudfunctions.net/api/stripePayment');
+    final headers = {'Content-Type': 'application/json'};
+    Map<String, String> body = {"price": price};
+    String jsonBody = json.encode(body);
+    // final encoding = Encoding.getByName('utf-8');
+
+    // final url = Uri.http('', '/stripePayment');
+    // final headers = {HttpHeaders.contentTypeHeader: 'application/json'};
+    // // final response =
+    // //     await http.get(url, headers: {'Content-Type': 'application/json'});
+
+    // final response = await post(url,
+    //     headers: {'Content-Type': 'application/json'}, body: body);
+
+    Response response = await post(
+      uri,
+      headers: headers,
+      body: jsonBody,
+      // encoding: encoding,
+    );
+
+    paymentIntentData = json.decode(response.body);
+    await Stripe.instance.initPaymentSheet(
+        paymentSheetParameters: SetupPaymentSheetParameters(
+      paymentIntentClientSecret: paymentIntentData!['paymentIntent'],
+      applePay: true,
+      googlePay: true,
+      style: ThemeMode.light,
+      merchantCountryCode: 'US',
+      merchantDisplayName: 'Pramodaya',
+    ));
+    setState(() {});
+    displayPaymentSheet(cartViweModel);
+  }
+
+  Future<void> displayPaymentSheet(CartViewModel cartViewModel) async {
+    try {
+      await Stripe.instance.presentPaymentSheet();
+      // parameters: PresentPaymentSheetParameters(
+      //         clientSecret: paymentIntentData!['paymentIntent'],
+      //         confirmPayment: true)
+      setState(() {
+        paymentIntentData = null;
+      });
+      cartViewModel.clearCart();
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Paid Successfully')));
+    } catch (e) {
+      print(e);
+    }
   }
 }

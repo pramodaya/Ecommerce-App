@@ -59,4 +59,11 @@ class CartViewModel extends ChangeNotifier {
       });
     }
   }
+
+  clearCart(){
+    setLoading(true);
+    _productCart.clear();
+    _totalPrice = 00.00;
+    setLoading(false);
+  }
 }
