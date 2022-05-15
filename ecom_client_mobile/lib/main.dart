@@ -16,8 +16,10 @@ import 'screens/splash/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
   Stripe.publishableKey = 'pk_test_51KzDT9IquXM5SQMDmnFq0TQMMOh2uh3VRd03Sx3ebzd8aAznlErBhkLWhyaMEGxA0suUceg392meHtnWzJSYQkdc00ytXTdHpL';
+  Stripe.merchantIdentifier = "Pramodaya";
+  await Stripe.instance.applySettings();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 

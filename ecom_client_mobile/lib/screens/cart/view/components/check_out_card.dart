@@ -93,7 +93,8 @@ class _CheckoutCardState extends State<CheckoutCard> {
                   child: DefaultButton(
                     text: "Check Out",
                     press: () {
-                      makePayment(cartViewModel, (cartViewModel.getTotalPrice* 100).toString());
+                      makePayment(cartViewModel,
+                          (cartViewModel.getTotalPrice * 100).toString());
                     },
                   ),
                 ),
@@ -144,7 +145,11 @@ class _CheckoutCardState extends State<CheckoutCard> {
 
   Future<void> displayPaymentSheet(CartViewModel cartViewModel) async {
     try {
-      await Stripe.instance.presentPaymentSheet();
+      await Stripe.instance.presentPaymentSheet(
+          parameters: PresentPaymentSheetParameters(
+              clientSecret: paymentIntentData!['paymentIntent'],
+              confirmPayment: true));
+      // await Stripe.instance.presentPaymentSheet();
       // parameters: PresentPaymentSheetParameters(
       //         clientSecret: paymentIntentData!['paymentIntent'],
       //         confirmPayment: true)
@@ -154,8 +159,13 @@ class _CheckoutCardState extends State<CheckoutCard> {
       cartViewModel.clearCart();
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Paid Successfully')));
+    } on StripeError catch (e) {
+      print(e.toString());
     } catch (e) {
       print(e);
     }
   }
+
+
+
 }
